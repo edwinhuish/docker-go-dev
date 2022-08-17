@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ARG OPENCV_VERSION="4.6.0"
 ENV OPENCV_VERSION $OPENCV_VERSION
+ENV GOPATH "/go"
+ENV GOROOT "/usr/local/go"
 
 RUN go run github.com/playwright-community/playwright-go/cmd/playwright install --with-deps
 
