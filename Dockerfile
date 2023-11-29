@@ -8,9 +8,7 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 
 
 COPY ./scripts/* /tmp/scripts/
-RUN bash /tmp/scripts/sshd-debian.sh \
-    && bash /tmp/scripts/git-lfs-debian.sh \
-    && bash /tmp/scripts/docker-debian.sh "true" "/var/run/docker-host.sock" "/var/run/docker.sock" "vscode" \
+RUN bash /tmp/scripts/git-lfs-debian.sh \
     && rm -rf /tmp/scripts/
 
 
