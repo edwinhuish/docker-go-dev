@@ -160,6 +160,7 @@ install_using_github() {
     sha256sum --ignore-missing -c "sha256sums"
     # Extract and install
     tar xf "${git_lfs_filename}" -C .
+    cd "git-lfs-${GIT_LFS_VERSION}"
     ./install.sh
     rm -rf /tmp/git-lfs /tmp/tmp-gnupg
 }
