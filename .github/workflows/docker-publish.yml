@@ -61,6 +61,7 @@ jobs:
         with:
           push: true
           context: .
+          build-args: VARIANT=${{ matrix.image_tag }}
           tags: |
             ${{ secrets.DOCKER_HUB_USER }}/${{ steps.env.outputs.IMAGE_NAME }}:${{ matrix.image_tag }}
             ${{ secrets.DOCKER_HUB_USER }}/${{ steps.env.outputs.IMAGE_NAME }}:${{ matrix.image_tag }}-${{ steps.env.outputs.TIME }}
