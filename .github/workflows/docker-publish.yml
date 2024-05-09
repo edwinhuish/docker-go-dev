@@ -22,8 +22,8 @@ jobs:
             latest,
             bullseye,
             1-bullseye,
-            1.18-bullseye
-            1.22-bullseye
+            1.18-bullseye,
+            1.22-bullseye,
           ]
 
 
