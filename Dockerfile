@@ -11,6 +11,12 @@ COPY ./scripts/* /tmp/scripts/
 RUN bash /tmp/scripts/git-lfs-debian.sh \
     && rm -rf /tmp/scripts/
 
+RUN cd /tmp \
+    && wget https://github.com/protocolbuffers/protobuf/releases/download/v26.1/protoc-26.1-linux-x86_64.zip \
+    && sudo unzip -d /usr/local/ protoc-26.1-linux-x86_64.zip \
+    && rm -rf /tmp/*
+
+
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
