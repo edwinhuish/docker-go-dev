@@ -16,7 +16,11 @@ RUN cd /tmp \
     && sudo unzip -d /usr/local/ protoc-26.1-linux-x86_64.zip \
     && rm -rf /tmp/*
 
-
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update \
+    && apt-get install -y ffmpeg \
+    && apt-get autoclean \
+    && rm -rf /var/lib/apt/lists/*
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
