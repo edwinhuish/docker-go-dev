@@ -27,6 +27,7 @@ jobs:
             1.20-bullseye,
             1.21-bullseye,
             1.22-bullseye,
+            1.20-bookworm,
           ]
 
 
