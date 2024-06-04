@@ -11,14 +11,22 @@ COPY ./scripts/* /tmp/scripts/
 RUN bash /tmp/scripts/git-lfs-debian.sh \
     && rm -rf /tmp/scripts/
 
-RUN cd /tmp \
-    && wget https://github.com/protocolbuffers/protobuf/releases/download/v26.1/protoc-26.1-linux-x86_64.zip \
-    && sudo unzip -d /usr/local/ protoc-26.1-linux-x86_64.zip \
-    && rm -rf /tmp/*
+# 替换 sources
+RUN rm /etc/apt/sources.list.d/* \
+    && echo 'deb https://mirrors.tencent.com/debian/ bookworm main non-free non-free-firmware contrib\n\
+    deb-src https://mirrors.tencent.com/debian/ bookworm main non-free non-free-firmware contrib\n\
+    deb https://mirrors.tencent.com/debian-security/ bookworm-security main\n\
+    deb-src https://mirrors.tencent.com/debian-security/ bookworm-security main\n\
+    deb https://mirrors.tencent.com/debian/ bookworm-updates main non-free non-free-firmware contrib\n\
+    deb-src https://mirrors.tencent.com/debian/ bookworm-updates main non-free non-free-firmware contrib\n\
+    deb https://mirrors.tencent.com/debian/ bookworm-backports main non-free non-free-firmware contrib\n\
+    deb-src https://mirrors.tencent.com/debian/ bookworm-backports main non-free non-free-firmware contrib'\
+    > /etc/apt/sources.list.d/sources.list
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
-    && apt-get install -y ffmpeg \
+    && apt-get install -y --no-install-recommends \
+    ffmpeg nodejs npm \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/*
 
