@@ -3,7 +3,7 @@ ARG VARIANT=bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/go:${VARIANT}
 
 # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
-ARG NODE_VERSION="none"
+ARG NODE_VERSION="lts/*"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
 
@@ -27,8 +27,7 @@ RUN rm /etc/apt/sources.list.d/* \
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-    ffmpeg nodejs npm \
-    && curl -fsSL https://get.pnpm.io/install.sh | sh - \
+    ffmpeg \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/*
 
