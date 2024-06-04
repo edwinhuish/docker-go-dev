@@ -25,7 +25,7 @@ RUN rm /etc/apt/sources.list.d/* \
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install -f -y --no-install-recommends \
     ffmpeg nodejs npm \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/*
