@@ -11,6 +11,7 @@ COPY ./scripts/* /tmp/scripts/
 RUN bash /tmp/scripts/git-lfs-debian.sh \
     && rm -rf /tmp/scripts/
 
+
 # 替换 sources
 RUN rm /etc/apt/sources.list.d/* \
     && echo 'deb https://mirrors.tencent.com/debian/ bookworm main non-free non-free-firmware contrib\n\
@@ -25,8 +26,9 @@ RUN rm /etc/apt/sources.list.d/* \
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
-    && apt-get install -f -y --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
     ffmpeg nodejs npm \
+    && curl -fsSL https://get.pnpm.io/install.sh | sh - \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/*
 
