@@ -22,10 +22,8 @@ RUN if [ -f /etc/apt/mirrors/debian.list ]; then \
 
 COPY ./scripts/* /tmp/scripts/
 RUN bash /tmp/scripts/git-lfs-debian.sh \
-    && rm -rf /tmp/scripts/
-
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update \
+    && rm -rf /tmp/scripts/ \
+    && DEBIAN_FRONTEND=noninteractive apt-get update \
     && apt-get install -y --no-install-recommends \
     ffmpeg \
     && apt-get autoclean \
