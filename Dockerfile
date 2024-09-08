@@ -13,16 +13,12 @@ RUN bash /tmp/scripts/git-lfs-debian.sh \
 
 
 # 替换 sources
-RUN rm /etc/apt/sources.list.d/* \
-    && echo 'deb https://mirrors.tencent.com/debian/ bookworm main non-free non-free-firmware contrib\n\
-    deb-src https://mirrors.tencent.com/debian/ bookworm main non-free non-free-firmware contrib\n\
-    deb https://mirrors.tencent.com/debian-security/ bookworm-security main\n\
-    deb-src https://mirrors.tencent.com/debian-security/ bookworm-security main\n\
-    deb https://mirrors.tencent.com/debian/ bookworm-updates main non-free non-free-firmware contrib\n\
-    deb-src https://mirrors.tencent.com/debian/ bookworm-updates main non-free non-free-firmware contrib\n\
-    deb https://mirrors.tencent.com/debian/ bookworm-backports main non-free non-free-firmware contrib\n\
-    deb-src https://mirrors.tencent.com/debian/ bookworm-backports main non-free non-free-firmware contrib'\
-    > /etc/apt/sources.list.d/sources.list
+# debian
+RUN sed -i 's|http://deb.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list \
+    && sed -i 's|https://security.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list
+# debian 12
+RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/mirrors/debian.list \
+    && sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/mirrors/debian-security.list
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
