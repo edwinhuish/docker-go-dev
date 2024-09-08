@@ -7,18 +7,22 @@ ARG NODE_VERSION="lts/*"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
 
+# 替换 sources
+# debian
+RUN if [ -f /etc/apt/sources.list ]; then \
+        sed -i 's|http://deb.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list \
+        && sed -i 's|https://security.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list; \
+    fi
+
+# debian 12
+RUN if [ -f /etc/apt/mirrors/debian.list ]; then \
+        sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/mirrors/debian.list \
+        && sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/mirrors/debian-security.list; \
+    fi
+
 COPY ./scripts/* /tmp/scripts/
 RUN bash /tmp/scripts/git-lfs-debian.sh \
     && rm -rf /tmp/scripts/
-
-
-# 替换 sources
-# debian
-RUN sed -i 's|http://deb.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list \
-    && sed -i 's|https://security.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list
-# debian 12
-RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/mirrors/debian.list \
-    && sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/mirrors/debian-security.list
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
